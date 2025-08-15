@@ -50,7 +50,7 @@ function Stats() {
       <div className="stats-grid">
         <div className="stat-item">
           <span className="stat-label">Username</span>
-          <span className="stat-value">{stats.username}</span>
+          <span className="stat-value username-value">{stats.username}</span>
         </div>
         <div className="stat-item">
           <span className="stat-label">Games Played</span>

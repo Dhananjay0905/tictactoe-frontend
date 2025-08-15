@@ -44,7 +44,9 @@
   gap: var(--spacing-lg);
 }
 
-/* Styling for each individual statistic card */
+/* Styling for each individual statistic card.
+  This is now a CSS container, allowing child elements to be sized relative to it.
+*/
 .stat-item {
   background: var(--surface);
   padding: var(--spacing-lg);
@@ -57,6 +59,7 @@
   transition: all var(--transition-normal);
   position: relative;
   overflow: hidden;
+  container-type: inline-size; /* Makes this a query container */
 }
 
 .stat-item:hover {
@@ -99,6 +102,17 @@
   font-family: var(--font-heading);
   line-height: 1.1;
 }
+
+/* --- THIS IS THE FIX --- */
+/* This class now keeps the username on a single line and shrinks the font to fit.
+*/
+.stat-value.username-value {
+    font-size: clamp(0.1rem, 16cqw, 2.8rem); /* Lowered the minimum font size */
+    white-space: nowrap; /* Prevents the name from wrapping to a new line */
+    width: 100%; /* Ensures the element knows its container's width */
+    text-align: center; /* Keeps the text centered */
+}
+
 
 /* Color variations for different types of stats */
 .stat-value.green {
