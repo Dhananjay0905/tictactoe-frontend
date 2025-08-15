@@ -4,7 +4,7 @@
 .cell {
   width: 100%;
   height: 100%;
-  background: transparent; /* Cells are transparent to show the board's background */
+  background: var(--surface); /* Cells now have a solid background */
   border: none;
   border-radius: var(--radius-md);
   font-size: 3.5rem;
@@ -15,12 +15,10 @@
   align-items: center;
   cursor: pointer;
   transition: all var(--transition-normal);
-  position: relative;
-  z-index: 2; /* Ensures cells are clickable above the board's pseudo-elements */
   -webkit-tap-highlight-color: transparent; /* Removes flash on mobile tap */
 }
 
-/* A subtle radial gradient appears on hover for visual feedback */
+/* A subtle background change on hover for visual feedback */
 .cell:hover {
   background: var(--surface-hover);
 }
@@ -43,7 +41,7 @@
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Once a cell is filled, the cursor changes to indicate it's not clickable */
+/* Once a cell is filled, the cursor changes and hover effect is removed */
 .cell-X,
 .cell-O {
   cursor: not-allowed;
@@ -51,7 +49,7 @@
 
 .cell-X:hover,
 .cell-O:hover {
-  background: transparent; /* Filled cells don't need a hover effect */
+  background: var(--surface); /* Filled cells don't need a hover effect */
 }
 
 /* Special animation for the cells that form the winning line */

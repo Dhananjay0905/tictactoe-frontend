@@ -11,20 +11,28 @@
 }
 
 /* Primary content container.
-  Sets a max-width for large screens and provides consistent padding.
+  This class is now ONLY for width, margin, and padding.
+  It no longer contains flex properties that would center its content.
 */
 .container {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
   padding: 0 var(--spacing-lg);
-  display: flex; /* Added to help with centering */
-  flex-direction: column; /* Added for proper stacking */
-  flex-grow: 1; /* Added to ensure it fills space */
+}
+
+/* --- THIS IS THE FIX --- */
+/* We target the <main> element with the .container class specifically.
+   This makes it fill the available vertical space.
+*/
+main.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Wrapper for page-specific content.
-  Ensures content is centered and animates on load.
+  This is the container that now handles all the centering.
 */
 .page-container {
   flex: 1; /* Allows this container to grow and fill available space */
@@ -37,20 +45,15 @@
 }
 
 /* --- UTILITY CLASSES --- */
-
-/* A reusable "glassmorphism" card style for primary containers.
-  The subtle backdrop-filter and border create a modern, layered look.
-*/
 .glass-card {
   background: rgba(30, 35, 71, 0.65);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); /* Safari support */
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
 }
 
-/* A reusable neon button style with a hover effect. */
 .neon-button {
   background: var(--primary-accent);
   border: none;
@@ -65,10 +68,9 @@
   box-shadow: var(--shadow-neon);
   position: relative;
   overflow: hidden;
-  -webkit-tap-highlight-color: transparent; /* Removes flash on mobile tap */
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* A subtle shine effect that sweeps across the button on hover. */
 .neon-button::before {
   content: '';
   position: absolute;
@@ -96,15 +98,12 @@
 }
 
 /* --- RESPONSIVE DESIGN --- */
-
-/* Tablet and smaller devices */
 @media (max-width: 768px) {
   .container {
     padding: 0 var(--spacing-md);
   }
 }
 
-/* Mobile devices */
 @media (max-width: 480px) {
   .page-container {
     padding: var(--spacing-lg) 0;
