@@ -49,6 +49,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
+  margin-left: auto; /* This is the fix to push links to the right */
 }
 
 .nav-links a {
@@ -132,6 +133,7 @@
     cursor: pointer;
     padding: var(--spacing-sm);
     z-index: 1001; /* Ensure it's above the nav links */
+    margin-left: auto; /* Pushes toggle to the right */
   }
 
   .nav-links {
@@ -147,6 +149,7 @@
     opacity: 0;
     visibility: hidden;
     transition: all var(--transition-normal);
+    margin-left: 0; /* Reset margin for mobile view */
   }
 
   .nav-links.mobile-open {

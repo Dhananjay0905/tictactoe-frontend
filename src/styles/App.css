@@ -18,6 +18,9 @@
   width: 100%;
   margin: 0 auto;
   padding: 0 var(--spacing-lg);
+  display: flex; /* Added to help with centering */
+  flex-direction: column; /* Added for proper stacking */
+  flex-grow: 1; /* Added to ensure it fills space */
 }
 
 /* Wrapper for page-specific content.
