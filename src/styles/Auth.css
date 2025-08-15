@@ -1,57 +1,49 @@
+/* FILE: src/styles/Auth.css */
+
+/* A flex container to center the authentication form vertically and horizontally.
+  It calculates the height to fill the screen below the navbar.
+*/
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 100px);
-  padding: var(--spacing-xl);
+  flex-grow: 1; /* Ensures it takes up available space in the page-container */
 }
 
+/* The main form container, using the .glass-card utility */
 .auth-form {
-  padding: var(--spacing-2xl);
-  max-width: 450px;
   width: 100%;
-  animation: fadeIn 0.8s ease-out;
-}
-
-.auth-form.glass-card {
+  max-width: 420px;
+  padding: var(--spacing-xl);
   position: relative;
 }
 
+/* A decorative neon border at the top of the card */
 .auth-form::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: var(--gradient-neon);
+  height: 2px;
+  background: var(--primary-accent);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: var(--shadow-neon);
 }
 
+/* Styling for the main heading (Login/Register) */
 .auth-form h2 {
   margin-bottom: var(--spacing-xl);
   color: var(--text-primary);
   font-family: var(--font-heading);
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
-  position: relative;
 }
 
-.auth-form h2::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  width: 60px;
-  height: 2px;
-  background: var(--primary-accent);
-  transform: translateX(-50%);
-}
-
+/* Grouping for labels and their corresponding inputs */
 .form-group {
   margin-bottom: var(--spacing-lg);
-  position: relative;
 }
 
 .form-group label {
@@ -64,93 +56,68 @@
 
 .form-group input {
   width: 100%;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: 0.8rem var(--spacing-md);
   background: var(--secondary-bg);
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   color: var(--text-primary);
+  font-family: var(--font-primary);
   font-size: 1rem;
   transition: all var(--transition-normal);
 }
 
 .form-group input:focus {
   border-color: var(--primary-accent);
-  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
-  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+  outline: none; /* Replaced by box-shadow */
 }
 
 .form-group input::placeholder {
   color: var(--text-muted);
 }
 
+/* The primary submission button for the form */
 .auth-button {
   width: 100%;
-  padding: var(--spacing-lg);
-  border: none;
-  border-radius: var(--radius-md);
-  background: var(--gradient-neon);
-  color: var(--primary-bg);
+  margin-top: var(--spacing-sm);
   font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  margin-top: var(--spacing-lg);
-  position: relative;
-  overflow: hidden;
 }
 
-.auth-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: all var(--transition-slow);
-}
-
-.auth-button:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.auth-button:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-neon);
-}
-
-.auth-button:active {
-  transform: translateY(0);
-}
-
+/* Styling for the error message box */
 .error-message {
   color: var(--danger);
   margin-bottom: var(--spacing-lg);
   padding: var(--spacing-md);
   background: rgba(255, 107, 107, 0.1);
-  border: 1px solid rgba(255, 107, 107, 0.3);
+  border: 1px solid rgba(255, 107, 107, 0.2);
   border-radius: var(--radius-md);
   font-size: 0.9rem;
   text-align: center;
 }
 
+/* The text and link to switch between login and register forms */
 .auth-switch {
-  margin-top: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
   text-align: center;
   color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 .auth-switch a {
   color: var(--primary-accent);
   text-decoration: none;
   font-weight: 600;
-  transition: color var(--transition-normal);
+  transition: all var(--transition-normal);
 }
 
 .auth-switch a:hover {
   color: var(--text-primary);
   text-shadow: 0 0 8px var(--primary-accent);
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 480px) {
+  .auth-form {
+    padding: var(--spacing-lg);
+  }
 }

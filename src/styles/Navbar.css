@@ -1,28 +1,34 @@
+/* FILE: src/styles/Navbar.css */
+
+/* Main navbar container.
+  It's sticky to the top of the viewport for easy access.
+  The glassmorphism effect is applied for a modern look.
+*/
 .navbar {
-  background: var(--surface);
-  backdrop-filter: blur(20px);
+  background: rgba(30, 35, 71, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* Safari support */
   border-bottom: 1px solid var(--border-color);
-  padding: var(--spacing-lg) 0;
+  padding: var(--spacing-md) 0;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   box-shadow: var(--shadow-sm);
 }
 
+/* A wrapper to constrain the navbar content to the main container width */
 .navbar-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
 }
 
+/* Styling for the main brand/logo */
 .nav-brand {
   font-family: var(--font-heading);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: var(--primary-accent);
+  color: var(--text-primary);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -31,77 +37,121 @@
 }
 
 .nav-brand:hover {
-  color: var(--text-primary);
+  color: var(--primary-accent);
   text-shadow: 0 0 10px var(--primary-accent);
 }
 
-.nav-brand::before {
-  content: '⚡';
-  font-size: 1.5rem;
-}
-
+/* List container for navigation links */
 .nav-links {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   align-items: center;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-md);
 }
 
 .nav-links a {
   text-decoration: none;
   color: var(--text-secondary);
   font-weight: 500;
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 0.5rem 1rem;
   border-radius: var(--radius-md);
   transition: all var(--transition-normal);
   position: relative;
 }
 
+/* A subtle underline effect that animates on hover */
 .nav-links a::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: 0;
   left: 50%;
+  transform: translateX(-50%);
   width: 0;
   height: 2px;
   background: var(--primary-accent);
-  transition: all var(--transition-normal);
-  transform: translateX(-50%);
+  transition: width var(--transition-normal);
+  border-radius: 2px;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.active {
   color: var(--text-primary);
   background: var(--surface-hover);
 }
 
-.nav-links a:hover::after {
-  width: 80%;
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 60%;
 }
 
+/* Styling for the "Welcome, User!" message */
 .nav-welcome {
   color: var(--text-muted);
   font-size: 0.9rem;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--secondary-bg);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
+  white-space: nowrap; /* Prevents the text from wrapping */
 }
 
+/* Styling for the logout button */
 .nav-logout-btn {
   border: none;
-  background: var(--gradient-secondary);
+  background: var(--secondary-accent);
   color: var(--text-primary);
-  padding: var(--spacing-sm) var(--spacing-lg);
+  padding: 0.6rem 1.2rem;
   border-radius: var(--radius-md);
   cursor: pointer;
   font-weight: 600;
+  font-size: 0.9rem;
   transition: all var(--transition-normal);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.2);
 }
 
 .nav-logout-btn:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 0 25px rgba(255, 107, 107, 0.5);
+}
+
+/* Initially hide the mobile menu toggle on larger screens */
+.mobile-menu-toggle {
+  display: none;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 768px) {
+  .nav-welcome {
+    display: none; /* Hide welcome message to save space */
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    z-index: 1001; /* Ensure it's above the nav links */
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--secondary-bg);
+    padding: 6rem 2rem 2rem 2rem; /* Add padding for content */
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+  }
+
+  .nav-links.mobile-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
 }

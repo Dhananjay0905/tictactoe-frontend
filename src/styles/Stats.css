@@ -1,92 +1,106 @@
+/* FILE: src/styles/Stats.css */
+
+/* The main container for the player statistics page.
+  It utilizes the .glass-card utility for a consistent theme.
+*/
 .stats-container {
+  width: 100%;
   max-width: 800px;
-  margin: var(--spacing-xl) auto;
-  padding: var(--spacing-2xl);
-  animation: fadeIn 0.8s ease-out;
+  padding: var(--spacing-xl);
   position: relative;
 }
 
-.stats-container.glass-card::before {
+/* A decorative neon border at the top of the card */
+.stats-container::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: var(--gradient-primary);
+  height: 2px;
+  background: var(--primary-accent);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: var(--shadow-neon);
 }
 
+/* Styling for the main heading */
 .stats-container h2 {
   font-family: var(--font-heading);
-  font-size: 2.5rem;
-  font-weight: 600;
+  font-size: 2.2rem;
+  font-weight: 700;
   text-align: center;
-  margin-bottom: var(--spacing-2xl);
-  background: var(--gradient-primary);
+  margin-bottom: var(--spacing-xl);
+  background: linear-gradient(90deg, var(--primary-accent), var(--text-primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
 }
 
+/* A responsive grid for displaying individual stat cards */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-xl);
-  margin-top: var(--spacing-xl);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-lg);
 }
 
+/* Styling for each individual statistic card */
 .stat-item {
-  background: var(--secondary-bg);
-  padding: var(--spacing-xl);
+  background: var(--surface);
+  padding: var(--spacing-lg);
   border-radius: var(--radius-md);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   border: 1px solid var(--border-color);
   transition: all var(--transition-normal);
   position: relative;
   overflow: hidden;
 }
 
-.stat-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--gradient-neon);
-  transform: scaleX(0);
-  transition: transform var(--transition-normal);
-}
-
-.stat-item:hover::before {
-  transform: scaleX(1);
-}
-
 .stat-item:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-md);
   border-color: var(--primary-accent);
 }
 
+/* A decorative top border that animates on hover */
+.stat-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0%;
+  height: 2px;
+  background: var(--primary-accent);
+  transition: all 0.4s ease;
+}
+
+.stat-item:hover::before {
+  left: 0;
+  width: 100%;
+}
+
+/* The label for the statistic (e.g., "Wins", "Losses") */
 .stat-label {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
+/* The numerical value of the statistic */
 .stat-value {
-  font-size: 3rem;
+  font-size: 2.8rem;
   font-weight: 700;
   font-family: var(--font-heading);
-  line-height: 1;
+  line-height: 1.1;
 }
 
+/* Color variations for different types of stats */
 .stat-value.green {
   color: var(--success);
   text-shadow: 0 0 15px rgba(78, 205, 196, 0.4);
@@ -97,42 +111,8 @@
   text-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
 }
 
-.stat-value.blue {
-  color: var(--primary-accent);
-  text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
-}
-
-.stat-value.yellow {
-  color: var(--warning);
-  text-shadow: 0 0 15px rgba(255, 230, 109, 0.4);
-}
-
-/* Loading animation for stats */
-.stat-value.loading {
-  color: var(--text-muted);
-  position: relative;
-}
-
-.stat-value.loading::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--border-color);
-  border-top: 2px solid var(--primary-accent);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: rotate 1s linear infinite;
-}
-
+/* --- RESPONSIVE DESIGN --- */
 @media (max-width: 768px) {
-  .stats-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--spacing-lg);
-  }
-  
   .stat-value {
     font-size: 2.5rem;
   }
@@ -142,17 +122,17 @@
   .stats-container {
     padding: var(--spacing-lg);
   }
-  
+
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr); /* Two columns on mobile */
     gap: var(--spacing-md);
   }
-  
+
   .stat-item {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
   }
-  
+
   .stat-value {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 }

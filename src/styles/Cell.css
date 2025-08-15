@@ -1,158 +1,73 @@
-.stats-container {
-  max-width: 800px;
-  margin: var(--spacing-xl) auto;
-  padding: var(--spacing-2xl);
-  animation: fadeIn 0.8s ease-out;
-  position: relative;
-}
+/* FILE: src/styles/Cell.css */
 
-.stats-container.glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-}
-
-.stats-container h2 {
-  font-family: var(--font-heading);
-  font-size: 2.5rem;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: var(--spacing-2xl);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-xl);
-  margin-top: var(--spacing-xl);
-}
-
-.stat-item {
-  background: var(--secondary-bg);
-  padding: var(--spacing-xl);
+/* Styling for each individual cell in the game grid */
+.cell {
+  width: 100%;
+  height: 100%;
+  background: transparent; /* Cells are transparent to show the board's background */
+  border: none;
   border-radius: var(--radius-md);
+  font-size: 3.5rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  border: 1px solid var(--border-color);
+  cursor: pointer;
   transition: all var(--transition-normal);
   position: relative;
-  overflow: hidden;
+  z-index: 2; /* Ensures cells are clickable above the board's pseudo-elements */
+  -webkit-tap-highlight-color: transparent; /* Removes flash on mobile tap */
 }
 
-.stat-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--gradient-neon);
-  transform: scaleX(0);
-  transition: transform var(--transition-normal);
+/* A subtle radial gradient appears on hover for visual feedback */
+.cell:hover {
+  background: var(--surface-hover);
 }
 
-.stat-item:hover::before {
-  transform: scaleX(1);
+.cell:active {
+  transform: scale(0.95);
 }
 
-.stat-item:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-accent);
-}
-
-.stat-label {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  margin-bottom: var(--spacing-md);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.stat-value {
-  font-size: 3rem;
-  font-weight: 700;
-  font-family: var(--font-heading);
-  line-height: 1;
-}
-
-.stat-value.green {
-  color: var(--success);
-  text-shadow: 0 0 15px rgba(78, 205, 196, 0.4);
-}
-
-.stat-value.red {
+/* Styling for the 'X' symbol */
+.cell-X {
   color: var(--secondary-accent);
-  text-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
+  text-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+  animation: fadeIn 0.3s ease-out;
 }
 
-.stat-value.blue {
-  color: var(--primary-accent);
-  text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+/* Styling for the 'O' symbol */
+.cell-O {
+  color: var(--success);
+  text-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+  animation: fadeIn 0.3s ease-out;
 }
 
-.stat-value.yellow {
-  color: var(--warning);
-  text-shadow: 0 0 15px rgba(255, 230, 109, 0.4);
+/* Once a cell is filled, the cursor changes to indicate it's not clickable */
+.cell-X,
+.cell-O {
+  cursor: not-allowed;
 }
 
-/* Loading animation for stats */
-.stat-value.loading {
-  color: var(--text-muted);
-  position: relative;
+.cell-X:hover,
+.cell-O:hover {
+  background: transparent; /* Filled cells don't need a hover effect */
 }
 
-.stat-value.loading::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--border-color);
-  border-top: 2px solid var(--primary-accent);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: rotate 1s linear infinite;
+/* Special animation for the cells that form the winning line */
+.cell.winning {
+  animation: glow 0.8s ease-in-out infinite alternate;
 }
 
-@media (max-width: 768px) {
-  .stats-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--spacing-lg);
-  }
-  
-  .stat-value {
-    font-size: 2.5rem;
-  }
-}
-
+/* --- RESPONSIVE DESIGN --- */
 @media (max-width: 480px) {
-  .stats-container {
-    padding: var(--spacing-lg);
+  .cell {
+    font-size: 3rem;
   }
-  
-  .stats-grid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-md);
-  }
-  
-  .stat-item {
-    padding: var(--spacing-lg);
-  }
-  
-  .stat-value {
-    font-size: 2rem;
+}
+
+@media (max-width: 360px) {
+  .cell {
+    font-size: 2.5rem;
   }
 }

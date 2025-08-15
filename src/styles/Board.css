@@ -1,19 +1,27 @@
+/* FILE: src/styles/Board.css */
+
+/* The main container for the 3x3 game grid.
+  It's a fixed-size square that scales down on smaller screens.
+*/
 .board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  width: 400px;
-  height: 400px;
+  width: 350px;
+  height: 350px;
   margin: 0 auto;
   border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
+  padding: var(--spacing-sm);
   background: var(--surface);
   box-shadow: var(--shadow-lg);
-  border: 2px solid var(--border-color);
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* Keeps the animated border contained */
+  border: 1px solid var(--border-color);
 }
 
+/* Pseudo-element for the animated conic-gradient border.
+  It rotates continuously behind the main board content.
+*/
 .board::before {
   content: '';
   position: absolute;
@@ -23,35 +31,38 @@
   height: 200%;
   background: conic-gradient(
     from 0deg,
-    transparent,
+    transparent 25%,
     var(--primary-accent),
-    transparent,
     var(--secondary-accent),
-    transparent
+    transparent 75%
   );
-  animation: rotate 10s linear infinite;
-  z-index: -1;
+  animation: rotate 8s linear infinite;
+  z-index: 1; /* Sits above the board background but below the cells */
 }
 
+/* A pseudo-element that acts as an inner background,
+  covering the animated gradient to create the border effect.
+*/
 .board::after {
   content: '';
   position: absolute;
-  inset: 2px;
+  inset: 3px; /* The thickness of the animated border */
   background: var(--surface);
   border-radius: var(--radius-md);
-  z-index: -1;
+  z-index: 1;
 }
 
+/* --- RESPONSIVE DESIGN --- */
 @media (max-width: 480px) {
   .board {
-    width: 320px;
-    height: 320px;
+    width: 300px;
+    height: 300px;
   }
 }
 
 @media (max-width: 360px) {
   .board {
-    width: 280px;
-    height: 280px;
+    width: 260px;
+    height: 260px;
   }
 }

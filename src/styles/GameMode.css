@@ -1,152 +1,143 @@
+/* FILE: src/styles/GameMode.css */
+
+/* Main container for the game mode selection screen.
+  It utilizes the .glass-card utility for a consistent theme.
+*/
 .gamemode-container {
-  max-width: 600px;
-  margin: var(--spacing-xl) auto;
-  padding: var(--spacing-2xl);
-  animation: fadeIn 0.8s ease-out;
+  width: 100%;
+  max-width: 500px;
+  padding: var(--spacing-xl);
+  position: relative; /* Required for the decorative border */
 }
 
-.gamemode-container.glass-card::before {
+/* A decorative neon border at the top of the card */
+.gamemode-container::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: var(--gradient-success);
+  height: 2px;
+  background: var(--primary-accent);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: var(--shadow-neon);
 }
 
+/* Styling for the main heading */
 .gamemode-container h2 {
   font-family: var(--font-heading);
-  font-size: 2.2rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
   text-align: center;
-  margin-bottom: var(--spacing-2xl);
-  background: var(--gradient-neon);
+  margin-bottom: var(--spacing-xl);
+  background: linear-gradient(90deg, var(--primary-accent), var(--text-primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
 }
 
+/* Grouping for labels and their corresponding inputs/selects */
 .option-group {
-  margin-bottom: var(--spacing-xl);
-  position: relative;
+  margin-bottom: var(--spacing-lg);
 }
 
 .option-group label {
   display: block;
-  margin-bottom: var(--spacing-md);
-  font-weight: 600;
-  color: var(--text-primary);
-  font-size: 1.1rem;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 1rem;
 }
 
+/* Consistent styling for all form inputs and select dropdowns */
 .option-group select,
 .option-group input {
   width: 100%;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: 0.8rem var(--spacing-md);
   background: var(--secondary-bg);
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   color: var(--text-primary);
+  font-family: var(--font-primary);
   font-size: 1rem;
   transition: all var(--transition-normal);
+  appearance: none; /* Removes default system appearance */
+  -webkit-appearance: none;
+}
+
+/* Custom dropdown arrow for select elements */
+.option-group select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23b8c5d6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-md) center;
+  background-size: 1em;
+  padding-right: 2.5rem; /* Make space for the arrow */
 }
 
 .option-group select:focus,
 .option-group input:focus {
   border-color: var(--primary-accent);
-  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+  outline: none; /* Replaced by box-shadow */
 }
 
+/* Container for the 'X' and 'O' symbol selection buttons */
 .symbol-picker {
-  display: flex;
-  gap: var(--spacing-lg);
-  margin-top: var(--spacing-md);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
 }
 
 .symbol-picker button {
-  flex: 1;
-  padding: var(--spacing-lg);
-  font-size: 2rem;
-  font-weight: bold;
+  padding: var(--spacing-md);
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: var(--font-heading);
   border: 2px solid var(--border-color);
   border-radius: var(--radius-md);
-  background: var(--secondary-bg);
+  background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
   transition: all var(--transition-normal);
-  position: relative;
-  overflow: hidden;
-}
-
-.symbol-picker button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: var(--primary-accent);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: all var(--transition-normal);
-  opacity: 0.1;
-}
-
-.symbol-picker button:hover::before {
-  width: 100px;
-  height: 100px;
 }
 
 .symbol-picker button:hover {
   border-color: var(--primary-accent);
+  background-color: var(--surface-hover);
+  color: var(--text-primary);
   transform: translateY(-2px);
 }
 
+/* Styling for the currently selected symbol button */
 .symbol-picker button.active {
-  background: var(--gradient-neon);
+  background: var(--primary-accent);
   color: var(--primary-bg);
   border-color: var(--primary-accent);
   box-shadow: var(--shadow-neon);
+  transform: translateY(-2px);
 }
 
+/* The primary action button to start or join a game */
 .start-game-btn {
   width: 100%;
-  padding: var(--spacing-lg);
-  border: none;
-  border-radius: var(--radius-md);
-  background: var(--gradient-success);
-  color: var(--text-primary);
-  font-size: 1.3rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  margin-top: var(--spacing-xl);
-  position: relative;
-  overflow: hidden;
-}
-
-.start-game-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left var(--transition-slow);
-}
-
-.start-game-btn:hover::before {
-  left: 100%;
+  margin-top: var(--spacing-lg);
+  font-size: 1.1rem;
+  background: var(--success);
+  box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
 }
 
 .start-game-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+  box-shadow: 0 0 30px rgba(78, 205, 196, 0.6);
 }
 
-.start-game-btn:active {
-  transform: translateY(-1px);
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 480px) {
+  .gamemode-container {
+    padding: var(--spacing-lg);
+  }
+
+  .gamemode-container h2 {
+    font-size: 1.8rem;
+  }
 }

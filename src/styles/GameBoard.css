@@ -1,63 +1,105 @@
+/* FILE: src/styles/GameBoard.css */
+
+/* Main container for the game board view.
+  Uses flexbox to center the board and game info vertically.
+*/
 .game-board-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-xl);
-  padding: var(--spacing-xl);
-  animation: fadeIn 0.8s ease-out;
+  gap: var(--spacing-lg);
+  width: 100%;
 }
 
+/* Styling for the shareable Game ID display */
 .game-id-display {
-  background: var(--secondary-bg);
-  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--surface);
+  padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--radius-md);
   font-family: var(--font-mono);
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--primary-accent);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
-  position: relative;
-  overflow: hidden;
-}
-
-.game-id-display::before {
-  content: '🎮';
-  margin-right: var(--spacing-sm);
-}
-
-.game-info {
-  font-size: 1.3rem;
-  font-weight: 600;
   text-align: center;
-  padding: var(--spacing-lg);
-  background: var(--surface);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  min-width: 300px;
 }
 
+/* The main information panel below the board.
+  Reuses the .glass-card style for a consistent look and feel.
+*/
+.game-info {
+  width: 100%;
+  max-width: 350px; /* Slightly wider than the board */
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.game-info p {
+  margin: 0.5rem 0;
+}
+
+/* Special styling for status messages (e.g., winner, waiting) */
 .message {
   font-weight: 700;
   color: var(--primary-accent);
   text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
-  animation: pulse 2s infinite;
+  animation: pulse 2.5s infinite;
 }
 
+/* Styling for the initial loading state */
 .loading {
-  font-size: 2rem;
-  margin-top: var(--spacing-2xl);
+  font-size: 1.5rem;
+  font-family: var(--font-heading);
   text-align: center;
   color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
 }
 
+/* A custom CSS spinner for the loading indicator */
 .loading::after {
   content: '';
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--border-color);
-  border-top: 2px solid var(--primary-accent);
+  display: block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary-accent);
   border-radius: 50%;
-  margin-left: var(--spacing-md);
-  animation: rotate 1s linear infinite;
+  animation: rotate 0.8s linear infinite;
+}
+
+/* Container for the "Play Again" and "Exit" buttons */
+.game-over-controls {
+  margin-top: var(--spacing-md);
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+/* Styling for buttons inside the game-over controls */
+.game-over-controls button {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+}
+
+/* A secondary button style for the "Exit" action */
+.game-over-controls button:last-child {
+  background: var(--secondary-accent);
+  box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+}
+
+.game-over-controls button:last-child:hover {
+  box-shadow: 0 0 30px rgba(255, 107, 107, 0.6);
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 480px) {
+  .game-info {
+    max-width: 300px;
+    font-size: 1rem;
+  }
 }
