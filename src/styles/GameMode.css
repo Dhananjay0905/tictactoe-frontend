@@ -1,67 +1,152 @@
 .gamemode-container {
-    max-width: 500px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: var(--spacing-xl) auto;
+  padding: var(--spacing-2xl);
+  animation: fadeIn 0.8s ease-out;
+}
+
+.gamemode-container.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-success);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.gamemode-container h2 {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  background: var(--gradient-neon);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .option-group {
-    margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-xl);
+  position: relative;
 }
 
 .option-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
+  display: block;
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1.1rem;
 }
 
 .option-group select,
 .option-group input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 1rem;
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--secondary-bg);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all var(--transition-normal);
+}
+
+.option-group select:focus,
+.option-group input:focus {
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
 }
 
 .symbol-picker {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-md);
 }
 
 .symbol-picker button {
-    flex: 1;
-    padding: 0.75rem;
-    font-size: 1.5rem;
-    font-weight: bold;
-    border: 2px solid #ddd;
-    border-radius: 4px;
-    background: #f9f9f9;
-    cursor: pointer;
-    transition: all 0.2s;
+  flex: 1;
+  padding: var(--spacing-lg);
+  font-size: 2rem;
+  font-weight: bold;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--secondary-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.symbol-picker button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--primary-accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all var(--transition-normal);
+  opacity: 0.1;
+}
+
+.symbol-picker button:hover::before {
+  width: 100px;
+  height: 100px;
+}
+
+.symbol-picker button:hover {
+  border-color: var(--primary-accent);
+  transform: translateY(-2px);
 }
 
 .symbol-picker button.active {
-    background-color: #007bff;
-    color: white;
-    border-color: #0056b3;
+  background: var(--gradient-neon);
+  color: var(--primary-bg);
+  border-color: var(--primary-accent);
+  box-shadow: var(--shadow-neon);
 }
 
 .start-game-btn {
-    width: 100%;
-    padding: 1rem;
-    border: none;
-    border-radius: 4px;
-    background-color: #28a745;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  width: 100%;
+  padding: var(--spacing-lg);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--gradient-success);
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  margin-top: var(--spacing-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.start-game-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--transition-slow);
+}
+
+.start-game-btn:hover::before {
+  left: 100%;
 }
 
 .start-game-btn:hover {
-    background-color: #218838;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+}
+
+.start-game-btn:active {
+  transform: translateY(-1px);
 }

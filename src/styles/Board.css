@@ -1,17 +1,57 @@
 .board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    width: 300px;
-    height: 300px;
-    margin: 0 auto;
-    border: 2px solid #333;
-    border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
 }
 
-@media (max-width: 400px) {
-    .board {
-        width: 240px;
-        height: 240px;
-    }
+.board::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    var(--primary-accent),
+    transparent,
+    var(--secondary-accent),
+    transparent
+  );
+  animation: rotate 10s linear infinite;
+  z-index: -1;
+}
+
+.board::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  z-index: -1;
+}
+
+@media (max-width: 480px) {
+  .board {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+@media (max-width: 360px) {
+  .board {
+    width: 280px;
+    height: 280px;
+  }
 }

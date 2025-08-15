@@ -1,27 +1,63 @@
 .game-board-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl);
+  animation: fadeIn 0.8s ease-out;
 }
 
 .game-id-display {
-    background-color: #e9ecef;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    font-family: monospace;
+  background: var(--secondary-bg);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--primary-accent);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.game-id-display::before {
+  content: '🎮';
+  margin-right: var(--spacing-sm);
 }
 
 .game-info {
-    font-size: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+  padding: var(--spacing-lg);
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  min-width: 300px;
 }
 
 .message {
-    font-weight: bold;
-    color: #007bff;
+  font-weight: 700;
+  color: var(--primary-accent);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+  animation: pulse 2s infinite;
 }
 
 .loading {
-    font-size: 1.5rem;
-    margin-top: 50px;
+  font-size: 2rem;
+  margin-top: var(--spacing-2xl);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.loading::after {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-top: 2px solid var(--primary-accent);
+  border-radius: 50%;
+  margin-left: var(--spacing-md);
+  animation: rotate 1s linear infinite;
 }

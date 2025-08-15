@@ -1,74 +1,156 @@
 .auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  padding: var(--spacing-xl);
 }
 
 .auth-form {
-    padding: 2rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+  padding: var(--spacing-2xl);
+  max-width: 450px;
+  width: 100%;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.auth-form.glass-card {
+  position: relative;
+}
+
+.auth-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-neon);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 .auth-form h2 {
-    margin-bottom: 1.5rem;
-    color: #333;
+  margin-bottom: var(--spacing-xl);
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  position: relative;
+}
+
+.auth-form h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 60px;
+  height: 2px;
+  background: var(--primary-accent);
+  transform: translateX(-50%);
 }
 
 .form-group {
-    margin-bottom: 1rem;
-    text-align: left;
+  margin-bottom: var(--spacing-lg);
+  position: relative;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #555;
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.9rem;
 }
 
 .form-group input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--secondary-bg);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all var(--transition-normal);
+}
+
+.form-group input:focus {
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+  background: var(--surface);
+}
+
+.form-group input::placeholder {
+  color: var(--text-muted);
 }
 
 .auth-button {
-    width: 100%;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  width: 100%;
+  padding: var(--spacing-lg);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--gradient-neon);
+  color: var(--primary-bg);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  margin-top: var(--spacing-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all var(--transition-slow);
+}
+
+.auth-button:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 .auth-button:hover {
-    background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-neon);
+}
+
+.auth-button:active {
+  transform: translateY(0);
 }
 
 .error-message {
-    color: #d9534f;
-    margin-bottom: 1rem;
+  color: var(--danger);
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 .auth-switch {
-    margin-top: 1rem;
-    font-size: 0.9rem;
+  margin-top: var(--spacing-xl);
+  text-align: center;
+  color: var(--text-muted);
 }
 
 .auth-switch a {
-    color: #007bff;
-    text-decoration: none;
+  color: var(--primary-accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transition-normal);
 }
 
 .auth-switch a:hover {
-    text-decoration: underline;
+  color: var(--text-primary);
+  text-shadow: 0 0 8px var(--primary-accent);
 }
