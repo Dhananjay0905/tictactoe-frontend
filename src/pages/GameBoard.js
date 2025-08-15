@@ -18,6 +18,10 @@ function GameBoard({ user }) {
   const [gameState, setGameState] = useState(null);
   const [playerSymbol, setPlayerSymbol] = useState(null);
   const [message, setMessage] = useState("Connecting to server...");
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [rematchOffered, setRematchOffered] = useState(false);
+  const [opponentRequestedRematch, setOpponentRequestedRematch] =
+    useState(false);
 
   const updateStats = useCallback(async (result, symbol) => {
     const token = localStorage.getItem("token");
@@ -42,21 +46,10 @@ function GameBoard({ user }) {
   }, []);
 
   useEffect(() => {
-    console.log(
-      "[GameBoard] useEffect triggered. Initializing socket connection."
-    );
-
-    // --- THIS IS THE FIX ---
-    // Force WebSocket transport to avoid sticky session issues on Render.
-    socket = io(SOCKET_URL, {
-      transports: ["websocket"],
-    });
+    socket = io(SOCKET_URL, { transports: ["websocket"] });
 
     socket.on("connect", () => {
-      console.log(`[GameBoard] Socket connected with id: ${socket.id}`);
-
       const isJoining = new URLSearchParams(location.search).get("join");
-
       if (gameId === "new" && location.state?.config) {
         setMessage("Creating your game...");
         socket.emit("createGame", {
@@ -70,23 +63,21 @@ function GameBoard({ user }) {
     });
 
     socket.on("gameUpdate", (newGameState) => {
-      console.log("[GameBoard] 'gameUpdate' event received.", newGameState);
       setGameState(newGameState);
-      if (!playerSymbol) {
-        const me = newGameState.players.find((p) => p.id === socket.id);
-        if (me) setPlayerSymbol(me.symbol);
-      }
+      setIsGameOver(false);
+      setRematchOffered(false);
+      setOpponentRequestedRematch(false);
       setMessage("");
+      const me = newGameState.players.find((p) => p.id === socket.id);
+      if (me) setPlayerSymbol(me.symbol);
     });
 
     socket.on(
       "gameCreated",
       ({ gameId: newGameId, gameState: newGameState }) => {
-        console.log(
-          `[GameBoard] 'gameCreated' event received. New Game ID: ${newGameId}`,
-          newGameState
-        );
-
+        setGameState(newGameState);
+        const me = newGameState.players.find((p) => p.id === socket.id);
+        if (me) setPlayerSymbol(me.symbol);
         if (
           newGameState.gameMode === "online" &&
           newGameState.players.length === 1
@@ -95,20 +86,13 @@ function GameBoard({ user }) {
         } else {
           setMessage("");
         }
-
-        setGameState(newGameState);
-        const me = newGameState.players.find((p) => p.id === socket.id);
-        if (me) {
-          setPlayerSymbol(me.symbol);
-        }
-
         navigate(`/game/${newGameId}`, { replace: true });
       }
     );
 
     socket.on("gameOver", (finalGameState) => {
-      console.log("[GameBoard] 'gameOver' event received.", finalGameState);
       setGameState(finalGameState);
+      setIsGameOver(true);
       let finalMessage = "";
       if (finalGameState.winner === "draw") {
         finalMessage = "It's a draw!";
@@ -116,51 +100,55 @@ function GameBoard({ user }) {
         finalMessage = `Player ${finalGameState.winner} wins!`;
       }
       setMessage(finalMessage);
-
       setPlayerSymbol((prevSymbol) => {
         updateStats(finalGameState.winner, prevSymbol);
         return prevSymbol;
       });
+    });
 
-      setTimeout(() => navigate("/gamemode"), 5000);
+    socket.on("rematchOffer", ({ player }) => {
+      if (player !== socket.id) {
+        setOpponentRequestedRematch(true);
+      }
     });
 
     socket.on("playerLeft", ({ message: msg }) => {
-      console.log("[GameBoard] 'playerLeft' event received.");
       setMessage(msg);
-      setTimeout(() => navigate("/gamemode"), 3000);
+      setIsGameOver(true); // Disable board and show buttons
     });
 
     socket.on("error", (errorMessage) => {
-      console.error("[GameBoard] 'error' event received:", errorMessage);
       alert(errorMessage);
       navigate("/gamemode");
     });
 
     return () => {
-      console.log("[GameBoard] Cleanup: Disconnecting socket.");
       socket.disconnect();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCellClick = (index) => {
-    if (!gameState || gameState.board[index] !== null || gameState.winner) {
+    if (
+      !gameState ||
+      gameState.board[index] !== null ||
+      gameState.winner ||
+      isGameOver
+    ) {
       return;
     }
-
-    if (gameState.gameMode === "local") {
-      socket.emit("makeMove", {
-        gameId,
-        index,
-        playerSymbol: gameState.currentPlayer,
-      });
-      return;
-    }
-
     if (gameState.currentPlayer === playerSymbol) {
       socket.emit("makeMove", { gameId, index, playerSymbol });
     }
+  };
+
+  const handlePlayAgain = () => {
+    setRematchOffered(true);
+    socket.emit("requestRematch", { gameId });
+  };
+
+  const handleExit = () => {
+    navigate("/gamemode");
   };
 
   if (!gameState) {
@@ -170,22 +158,28 @@ function GameBoard({ user }) {
   return (
     <div className="game-board-container">
       <h2>Tic-Tac-Toe</h2>
-      {gameState.gameMode === "online" && (
-        <p className="game-id-display">
-          Game ID: {gameId} (Share with a friend!)
-        </p>
+      {gameState.gameMode === "online" && !isGameOver && (
+        <p className="game-id-display">Game ID: {gameId}</p>
       )}
       <Board board={gameState.board} onCellClick={handleCellClick} />
       <div className="game-info">
-        {message ? (
-          <p className="message">{message}</p>
-        ) : (
+        {message && <p className="message">{message}</p>}
+        {!message && !isGameOver && (
           <>
             <p>Current Turn: {gameState.currentPlayer}</p>
-            {playerSymbol && gameState.gameMode !== "local" && (
-              <p>You are: {playerSymbol}</p>
-            )}
+            {playerSymbol && <p>You are: {playerSymbol}</p>}
           </>
+        )}
+        {isGameOver && (
+          <div className="game-over-controls">
+            {opponentRequestedRematch && !rematchOffered && (
+              <p>Your opponent wants a rematch!</p>
+            )}
+            <button onClick={handlePlayAgain} disabled={rematchOffered}>
+              {rematchOffered ? "Waiting for opponent..." : "Play Again"}
+            </button>
+            <button onClick={handleExit}>Exit to Lobby</button>
+          </div>
         )}
       </div>
     </div>
