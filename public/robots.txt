@@ -1,0 +1,12 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
+
+// FILE: public/favicon.ico
+[binary favicon file]
+
+// FILE: public/logo192.png
+[binary image file: logo192.png]
+
+// FILE: public/logo512.png
+[binary image file: logo512.png]
